@@ -1,0 +1,26 @@
+{
+  "name": "kiss-server",
+  "version": "1.0.0",
+  "description": "the server of my site",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "kissshot",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "express-logger": "0.0.3",
+    "mongoose": "^4.4.7"
+  },
+  "devDependencies": {
+    "morgan": "^1.7.0",
+    "nodemon": "^1.9.1"
+  }
+}
