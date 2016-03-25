@@ -24,8 +24,25 @@ app.engine('.html', handlebars({
 app.set('view engine', '.html');  				//设置模板引擎
 app.use(express.static(__dirname + '/public'));  	//设置静态文件路径
 
+var user = require('./models/admin/user.js');
+user.find(function(err, users){
+	if(users.length){
+		return;
+	}
+	new user({
+		account: 'kissshot',
+		password: 'xtu2008',
+		email: '751838741@qq.com',
+		role: '0',
+		created: new Date(),
+	}).save(function(){
+		console.log('user add success!')
+	});
+});
 // add routes
-require('./routes.js')(app);
+require('./controllers/blog.js').registerRoutes(app);
+require('./controllers/admin.js').registerRoutes(app);
+require('./controllers/common.js').registerRoutes(app);
 
 app.listen(app.get('port'), function(){
 	console.log('Start!  '+ app.get('env'));
