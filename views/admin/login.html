@@ -1,8 +1,20 @@
+{{#section "mixStyle"}}
+<style type="text/css">
+  html{
+    height: 100%;
+  }
+  body {
+    background: url(/img/admin/login_bg.jpg) left no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+</style>
+{{/section}}
 <div class="container">
 
   <form class="form-signin">
     <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputEmail" class="sr-only">Email address</label>
+    <label for="inputAccount" class="sr-only">Email address</label>
     <input type="text" id="inputAccount" class="form-control" placeholder="Account" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -31,49 +43,7 @@
   </div>
 </div>
 
-<#section "require">
-  <script>
-    requirejs.config({
-      baseUrl: 'js/',
-      //当模块id前缀为app时，他便由js/app加载模块文件
-      //这里设置的路径是相对与baseUrl的，不要包含.js
-      paths: {
-        "jquery": "/vendor/jquery/jquery-2.0.2.min",
-        "bootstrap": "/vendor/bootstrap/bootstrap.min",
-        'md5': "/vendor/crypto/md5"
-      },
-      shim: {
-        "bootstrap": {
-          deps: ['jquery'],
-          exports: 'bootstrap'
-        }
-      },
-      debug: true
-    });
-
-    requirejs(['jquery', 'bootstrap', 'md5'], function($, bs, hash){
-      var modal = $('#modalTip'),
-              modalContent = $('.modal-body'),
-              throttle = true;
-      $('.form-signin').submit(function(e){
-        if(throttle){
-          throttle = false;
-          var userData = {};
-          userData.account = $('#inputAccount').val().trim();
-          userData.password = hex_md5($('#inputPassword').val().trim());
-          $.post('/admin/auth', userData, function(res){
-            throttle = true;
-            if(res.status == 'success'){
-              location.href = '/admin';
-            }else{
-              modalContent.text(res.errorMsg);
-              modal.modal('show');
-            }
-          });
-        }
-
-        e.preventDefault();
-      });
-    })
-  </script>
-</#section>
+{{#section "require"}}
+<script type="text/javascript" data-main="/js/admin/login.js" src="/vendor/requirejs/require.js">
+</script>
+{{/section}}

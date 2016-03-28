@@ -1,5 +1,5 @@
 var express = require('express');
-var appConfig = require('./lib/config-base.js');
+var appConfig = require('./lib/config.js');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var handlebars = require('express-handlebars');  //引入handlebars，设置默认模板
@@ -48,6 +48,8 @@ var user = require('./models/admin/user.js');
  //add routes
 require('./controllers/blog.js').registerRoutes(app);
 require('./controllers/admin.js').registerRoutes(app);
+require('./controllers/article.js').registerRoutes(app);
+require('./controllers/resource.js').registerRoutes(app);
 require('./controllers/common.js').registerRoutes(app);
 
 app.listen(app.get('port'), function(){

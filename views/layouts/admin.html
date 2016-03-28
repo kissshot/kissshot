@@ -5,8 +5,9 @@
 	<title>{{title}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!-- 新 Bootstrap 核心 CSS 文件 -->
-	<link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/admin/main.css">
+	{{{_sections.mixStyle}}}
 	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 </head>
 <body>
@@ -15,8 +16,5 @@
 		{{{body}}}
 	</div>
 </body>
-<script type="text/javascript" src="/vendor/requirejs/require.js">
-	
-</script>
 {{{_sections.require}}}
 </html>
