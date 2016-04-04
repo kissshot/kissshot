@@ -1,4 +1,4 @@
-@import url("../../common/css/font-awesome.min.css");
+@import url("../font-awesome.min.css");
 
 /* Basic */
 	
@@ -13,13 +13,9 @@
 		height: 100%;
 		overflow: hidden;
 	}
-
-	h1, h2, h3, h4, h5, h6 {
-		font-weight: 300;
-		color: #666;
-		line-height: 1.5em;
+	ul {
+		list-style: none;
 	}
-
 	header {
 		margin: 0 0 2em 0;
 	}
@@ -97,7 +93,7 @@
 		width: 375px;
 		height: 100%;
 		color: #fff;
-		background: #222629 url("images/overlay.png");
+		background: #222629;
 		box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.1);
 		text-align: right;
 	}
@@ -229,10 +225,16 @@
 	#main {
 		margin-left: 375px;
 		height: calc(100% - 3.8em);
-		background: url(../img/banner.jpg) no-repeat;
+		background: url(../../img/blog/banner.jpg) no-repeat;
 		background-size: cover;
+		padding: 2%;
+		overflow-y: auto;
+		overflow-x: hidden;
+		color: #FFFFFF;
 	}
-
+	#main img {
+		width: 100%;
+	}
 
 /* Wide */
 
@@ -412,7 +414,7 @@
 				width: 275px;
 				z-index: 10002;
 				width: 275px;
-				background: #222729 url("images/overlay.png");
+				background: #222729;
 				box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.125);
 			}
 

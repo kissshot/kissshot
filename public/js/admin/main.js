@@ -5,7 +5,8 @@ requirejs.config({
     "bootstrap": "/vendor/bootstrap/js/bootstrap.min",
     'md5': "/vendor/crypto/md5",
     'umeditor-config': "/vendor/umeditor/umeditor.config",
-    'umeditor': "/vendor/umeditor/umeditor"
+    'umeditor': "/vendor/umeditor/umeditor",
+    'ckeditor': "/vendor/ckeditor/ckeditor"
   },
   shim: {
     "bootstrap": {
@@ -21,6 +22,7 @@ requirejs.config({
 });
 window.UMEDITOR_HOME_URL = '/vendor/umeditor/';
 requirejs(['jquery', 'bootstrap', 'md5', 'editor'], function($, bs, hash, editor){
+
   $('#save').click(function(){
     editor.save();
   })

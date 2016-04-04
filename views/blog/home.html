@@ -1,1 +1,12 @@
-<h1>home</h1>
+<ul>
+    {{#each articles}}
+        <li>
+            <a href="article/{{id}}">
+                {{title}}
+            </a>
+            <span>{{key}}</span>
+            <span>{{time}}</span>
+            {{{content}}}
+        </li>
+    {{/each}}
+</ul>

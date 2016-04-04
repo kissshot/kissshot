@@ -21,6 +21,8 @@
     "express-logger": "0.0.3",
     "express-session": "^1.13.0",
     "formidable": "^1.0.17",
+    "hbs": "^4.0.0",
+    "material-ui": "^0.15.0-alpha.2",
     "mongoose": "^4.4.7"
   },
   "devDependencies": {

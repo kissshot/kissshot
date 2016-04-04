@@ -18,8 +18,8 @@ requirejs.config({
 
 requirejs(['jquery', 'bootstrap', 'md5'], function($, bs, hash){
   var modal = $('#modalTip'),
-          modalContent = $('.modal-body'),
-          throttle = true;
+      modalContent = $('.modal-body'),
+      throttle = true;
   $('.form-signin').submit(function(e){
     if(throttle){
       throttle = false;

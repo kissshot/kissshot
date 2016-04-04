@@ -1,3 +1,4 @@
 node_modules/
 lib/credentials.js
 .idea/
+public/resources

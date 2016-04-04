@@ -3,7 +3,25 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
+#main {
 
+}
+/*article*/
+#main .form-horizontal {
+  padding: 0 30% 0 5%;
+  margin: 0 auto;
+}
+.editor-area {
+  padding: 0 5%;
+}
+.form-horizontal .control-label {
+  text-align: left;
+}
+.submit-btn-container {
+  text-align: right;
+  margin: 5%;
+}
+/* login */
 .form-signin {
   max-width: 330px;
   padding: 15px;
