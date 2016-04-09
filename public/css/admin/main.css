@@ -6,7 +6,20 @@ body {
 #main {
 
 }
-/*article*/
+/*upload btn*/
+#cover {
+  margin: 0 15px
+
+}
+#cover input, #cover form {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+  /*article*/
 #main .form-horizontal {
   padding: 0 30% 0 5%;
   margin: 0 auto;

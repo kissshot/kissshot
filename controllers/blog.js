@@ -5,12 +5,11 @@ module.exports = {
 	registerRoutes: function(app) {
 		app.get('/', this.main);
 	},
-	main: function(req, res, next){
+	main: function(req, res){
+		console.log(req.session);
 		article.find(function(err, articles){
-
 			var articles = articles.map(function(article){
 				var time = utils.getTime('yy-mm-dd', new Date(article.lastUpdate));
-				console.log(time+'!!!!!');
 				return {
 					id: article.id,
 					title: article.title,
@@ -19,7 +18,6 @@ module.exports = {
 					time: time
 				}
 			});
-			console.log(articles);
 			res.render(viewsPath + 'home', {articles: articles});
 		});
 	}

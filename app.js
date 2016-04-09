@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('port', appConfig.http.port);
 app.use(require('cookie-parser')(credentials.cookieSecret));
-app.use(require('express-session')());
+app.use(require('express-session')({secret: credentials.cookieSecret}));
 app.engine('.html', handlebars({
 		defaultLayout: 'main',
 		extname: '.html',
@@ -50,7 +50,7 @@ switch(env){
   		password: hash.md5Hash(hash.md5Hash('xtu2008'), true),
   		email: '751838741@qq.com',
   		role: '0',
-  		created: new Date().getTime(),
+  		created: Date.now(),
  		authHash: '',
  		lastLogin: ''
   	}).save(function(){
@@ -65,6 +65,6 @@ require('./controllers/resource.js').registerRoutes(app);
 require('./controllers/common.js').registerRoutes(app);
 
 app.listen(app.get('port'), function(){
-	console.log('Start!  '+ env);
+	//console.log('Start!  '+ env);
 });
 

@@ -17,27 +17,16 @@ module.exports = {
 		res.redirect('/admin');
 	},
 	main: function(req, res){
-		console.log(req.cookies);
 		auth.isLogined(req.cookies.account).then(function(){
 			res.render(viewsPath + 'home', {layout: 'admin', title: '作坊'});
 		}).catch(function(){
 			res.clearCookie('account');
 			res.redirect('/admin/login');
 		});
-		// auth.isLogined(req.cookies.account, function(flag){
-		// 	if(flag){
-		// 		res.render(viewsPath + 'home', {layout: 'admin', title: '作坊'});
-		// 	}else{
-		// 		res.clearCookie('account');
-		// 		res.redirect('/admin/login');
-		// 	}
-		// })
 	},
 	auth: function(req, res){
 		var userData = req.body;
-		console.log(userData)
 		user.findOne({'account': userData.account}, function(err, user){
-			console.log(user)
 			var authHash;
 			var now = (new Date()).getTime();
 			if(!user){
