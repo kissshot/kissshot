@@ -1,13 +1,16 @@
+/**
+ * Created by koroti on 2016/4/9.
+ */
 define(function(require, exports, module){
     /*
-    * 文件上传构造函数，暂时只支持图片上传
-    * @param {dom} el 上传组件容器
-    * @param {object} options 可选参数
-    * @returns {object} upload 上传函数实例
-    *
-    * @date 2016-04-01
-    * @author kissshot
-    */
+     * 文件上传构造函数，暂时只支持图片上传
+     * @param {dom} el 上传组件容器
+     * @param {object} options 可选参数
+     * @returns {object} upload 上传函数实例
+     *
+     * @date 2016-04-01
+     * @author kissshot
+     */
     function upload(el, options){
         var defaults = {
             upUrl: "/resource/img/upload"
@@ -42,7 +45,7 @@ define(function(require, exports, module){
             $(iframe).remove();
             try{
                 jsonStr = JSON.parse(jsonStr);
-                this.options.success(jsonStr, this);
+                this.options.success(jsonStr);
             }catch(e){
                 console.log(e);
             }
@@ -50,7 +53,7 @@ define(function(require, exports, module){
     }
     module.exports = {
         init: function(el, options){
-            return new upload(el, options);
+            return new popup(options, callback);
         }
     }
 });

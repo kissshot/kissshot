@@ -13,7 +13,8 @@ module.exports = {
 				return {
 					id: article.id,
 					title: article.title,
-					content: article.content,
+					description: article.description,
+					cover: article.cover,
 					key: article.key,
 					time: time
 				}

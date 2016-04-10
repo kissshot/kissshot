@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
-
+//ндубдёпм
 var articleSchema = mongoose.Schema({
     title: String,
     key: {type: String, set: ifyKey, get: parseKey},
+    description: String,
     content: { type: String, set: setContent , get: getContent },
     createTime: { type: Date, default: Date.now },
+    cover: String,
     lastUpdate: { type: Date, default: Date.now }
 });
 

@@ -4,11 +4,15 @@ var viewsPath = 'admin/',
 	consts = require('../lib/const.js');
 
 module.exports = {
+	/*
+	 * 路由监听
+	 * param express实例
+	 */
 	registerRoutes: function(app) {
-		app.get('/admin', this.main);
-		app.get('/admin/login', this.login);
-		app.post('/admin/auth', this.auth);
-		app.get(/\/admin(?:\/[^\.]*)/, this.routing);
+		app.get('/admin', this.main); 					//后台入口
+		app.get('/admin/login', this.login);			//后台登录
+		app.post('/admin/auth', this.auth);				//权限验证
+		app.get(/\/admin(?:\/[^\.]*)/, this.routing);	//重定向到后台入口
 	},
 	login: function(req, res){
 		res.render(viewsPath+ 'login',{layout: 'admin', title: '作坊'});
@@ -17,7 +21,7 @@ module.exports = {
 		res.redirect('/admin');
 	},
 	main: function(req, res){
-		auth.isLogined(req.cookies.account).then(function(){
+		auth.isLogined(req).then(function(){
 			res.render(viewsPath + 'home', {layout: 'admin', title: '作坊'});
 		}).catch(function(){
 			res.clearCookie('account');

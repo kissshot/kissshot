@@ -4,11 +4,18 @@ define(function(require, exports, module){
 	var upload = require('../common/upload');
 	var modal = $('#modalTip'),
 		modalContent = $('.modal-body'),
-		throttle = true;
+		throttle = true,
+		coverUrl = '';
 	CKEDITOR.replace( 'myEditor' );
 	//var um = UM.getEditor('myEditor');
-	upload.init('#cover', {success: function(res){
-		console.log(res);
+	upload.init('#cover', {success: function(res, inst){
+		if(res.state == 'success'){
+			coverUrl = res.url;
+			inst.$el.after('<img src="'+coverUrl+'" width="200"/>');
+		}else{
+			modalContent.text('上传失败！');
+			modal.modal('show');
+		}
 	}});
 	module.exports = {
 		save: function(){
@@ -18,12 +25,11 @@ define(function(require, exports, module){
 				var postData = {};
 				postData.title = $('#title').val();
 				postData.key = $('#key').val();
+				postData.description = $('#description').val();
+				postData.cover = coverUrl;
 				postData.text = CKEDITOR.instances.myEditor.getData();
 				console.log(postData);
-				$.post({
-					url: '/article/add',
-					data: postData,
-					success: function(res){
+				$.post('/article/add',postData,function(res){
 						throttle = true;
 						if(res.status == 'success'){
 							modalContent.text('发布成功！');
@@ -32,10 +38,6 @@ define(function(require, exports, module){
 							modalContent.text(res.errorMsg);
 							modal.modal('show');
 						}
-					},
-					error: function(){
-
-					}
 				});
 			}
 		}

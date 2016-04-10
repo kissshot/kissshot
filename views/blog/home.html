@@ -1,12 +1,96 @@
-<ul>
-    {{#each articles}}
-        <li>
-            <a href="article/{{id}}">
-                {{title}}
-            </a>
-            <span>{{key}}</span>
-            <span>{{time}}</span>
-            {{{content}}}
-        </li>
-    {{/each}}
-</ul>
+<div class="row">
+{{#each articles}}
+    <div class="col-sm-6 col-md-3 list-item">
+        <div class="thumbnail">
+            {{#if cover}}
+            <img src="{{cover}}"/>
+            {{/if}}
+            <div class="caption">
+                <h3><a href="article/{{id}}">
+                    {{title}}
+                </a></h3>
+                <p>{{description}}</p>
+                <p><span>{{time}}</span></p>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</div>
+{{#section "jquery"}}
+<script>
+    $(function(){
+        var $w = $(window);
+        var $lists;
+        function getTop($doms, index){
+            var $dom;
+            if(index < 0){
+                return 0;
+            }else{
+                $dom = $doms.eq(index);
+            }
+            return $dom.position().top + $dom.height();
+        }
+        $w.on('resize load', function(){
+            var w = $w.width();
+            if(w < 768){
+                $lists = $('.list-item');
+                $lists.css({
+                    position: 'static'
+                });
+                $('.row').height($lists.last().position().top + $lists.last().height());
+            }else if(w < 992 && w >= 768){
+                $lists = $('.list-item');
+                $lists.each(function(i){
+                    var $this = $(this);
+                    if(i%2){
+                        $this.css({
+                            position: 'absolute',
+                            left: "50%",
+                            top: getTop($lists,i-2)
+                        });
+                    }else{
+                        $this.css({
+                            position: 'absolute',
+                            left: "0",
+                            top: getTop($lists,i-2)
+                        });
+                    }
+                });
+                $('.row').height($lists.last().position().top + $lists.last().height());
+            }else if(w >= 992){
+                $lists = $('.list-item');
+                $lists.each(function(i){
+                    var $this = $(this);
+                    if(i%4 == 0){
+                        $this.css({
+                            position: 'absolute',
+                            left: "0",
+                            top: getTop($lists,i-4)
+                        });
+                    }else if(i%4 == 1){
+                        $this.css({
+                            position: 'absolute',
+                            left: "25%",
+                            top: getTop($lists,i-4)
+                        });
+                    }else if(i%4 == 2){
+                        $this.css({
+                            position: 'absolute',
+                            left: "50%",
+                            top: getTop($lists,i-4)
+                        });
+                    }else{
+                        $this.css({
+                            position: 'absolute',
+                            left: "75%",
+                            top: getTop($lists,i-4)
+                        });
+                    }
+                });
+                $('.row').height($lists.last().position().top + $lists.last().height());
+            }
+        });
+    });
+</script>
+{{/section}}
+
