@@ -2,58 +2,118 @@
  * Created by koroti on 2016/4/9.
  */
 define(function(require, exports, module){
-    /*
-     * 文件上传构造函数，暂时只支持图片上传
-     * @param {dom} el 上传组件容器
-     * @param {object} options 可选参数
-     * @returns {object} upload 上传函数实例
-     *
-     * @date 2016-04-01
-     * @author kissshot
-     */
-    function upload(el, options){
-        var defaults = {
-            upUrl: "/resource/img/upload"
-        };
-        this.$el = $(el);
-        this.options = $.extend({}, defaults, options);
-        this.initDom();
-        this.bindEvents();
-        return this;
-    }
-    upload.prototype = {
-        construtor: upload,
-        formTpl: '<form action="{{action}}" class="upload-form" method="post" enctype="multipart/form-data" target="up">' +
-        '<input style=\"filter: alpha(opacity=0);\" class="upload-input" type="file" hidefocus name="upload" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/>' +
-        '</form>',
-        initDom: function(){
-            var me = this;
-            me.form = $(me.formTpl.replace('{{action}}', me.options.upUrl)).appendTo(me.$el);
-            me.input = me.form.find('input');
+    module.exports = {
+        popupDom: {
+            alter : '<div id="alter" class="modal-dialog">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-header"><h4 class="modal-title"><%=title=%></h4></div>'+
+                            '<div class="modal-body"><%=content=%></div>'+
+                            '<div class="modal-footer"> <button type="button" class="btn btn-primary"><%=sureBtn=%></button></div>'+
+                        '</div> '+
+                    '</div>',
+            load : '<div id="load" class="modal-dialog modal-sm">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-body"><%=content=%></div>'+
+                        '</div> '+
+                    '</div>',
+            confirm : '<div id="confirm" class="modal-dialog">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-header"><h4 class="modal-title"><%=title=%></h4></div>'+
+                            '<div class="modal-body"><%=content=%></div>'+
+                            '<div class="modal-footer"><button type="button" class="btn btn-default"><%=cancelBtn=%></button><button type="button" class="btn btn-primary"><%=sureBtn=%></button></div>'+
+                        '</div> '+
+                    '</div>'
         },
-        bindEvents: function(){
+        alter: function(options, callback, scope){
+            options = options || '';
+            if(typeof options == 'string'){
+                options = {content:options}
+            }
+            this.show($.extend({type: 'alter'},options), callback, scope);
+        },
+        load: function(options, callback, scope){
+            options = options || '';
+            if(typeof options == 'string'){
+                options = {content:options}
+            }
+            this.show($.extend({type: 'load'},options), callback, scope);
+        },
+        confirm: function(options, callback, scope){
+            options = options || '';
+            if(typeof options == 'string'){
+                options = {content:options}
+            }
+            this.show($.extend({type: 'confirm'},options), callback, scope);
+        },
+        defaults: {
+            alter: {
+                sureBtn: '纭畾',
+                title: '鎻愮ず'
+            },
+            load: {
+
+            },
+            confirm: {
+                sureBtn: '纭畾',
+                cancelBtn: '鍙栨秷',
+                title : '鎻愮ず'
+            }
+        },
+        show: function(options, callback, scope){
             var me = this;
-            me.input.change(function(){
-                $('<iframe name="up" style="display: none"></iframe>').appendTo($('body')).load(function(){
-                    me.iframeLoaded(this);
+            var type = options.type;
+            var options = $.extend({}, this.defaults[type], options);
+            var $popup = $('#'+type);
+            var popupDom = this.popupDom[type];
+            if($popup.length){
+                $.each(options, function(k, v){
+                    switch(k){
+                        case 'title':
+                            $popup.find('.modal-title').html(v);
+                            break;
+                        case 'content':
+                            $popup.find('.modal-body').html(v);
+                            break;
+                        case 'sureBtn':
+                            $popup.find('.btn-primary').html(v);
+                            break;
+                        case 'cancelBtn':
+                            $popup.find('.btn-default').html(v);
+                            break;
+                    }
                 });
-                me.form.submit();
+            }else{
+                $.each(options, function(k, v){
+                    switch(k){
+                        case 'title':
+                            popupDom = popupDom.replace('<%=title=%>', v);
+                            break;
+                        case 'content':
+                            popupDom = popupDom.replace('<%=content=%>', v);
+                            break;
+                        case 'sureBtn':
+                            popupDom = popupDom.replace('<%=sureBtn=%>', v);
+                            break;
+                        case 'cancelBtn':
+                            popupDom = popupDom.replace('<%=cancelBtn=%>', v);
+                            break;
+                    }
+                });
+                $popup = $(popupDom).appendTo('body');
+            }
+            this['$'+type] = $popup.show().find('.modal-footer').one('click','button',function(e){
+                if($(this).hasClass('btn-primary')){
+                    callback && callback(true);
+                }else{
+                    callback && callback(false);
+                }
+                $popup.hide();
             });
         },
-        iframeLoaded: function(iframe){
-            var jsonStr = iframe.contentWindow.document.body.textContent;
-            $(iframe).remove();
-            try{
-                jsonStr = JSON.parse(jsonStr);
-                this.options.success(jsonStr);
-            }catch(e){
-                console.log(e);
+        loadHide: function(){
+            if(this['$load']){
+                this['$load'].hide();
             }
         }
-    }
-    module.exports = {
-        init: function(el, options){
-            return new popup(options, callback);
-        }
-    }
+    };
 });

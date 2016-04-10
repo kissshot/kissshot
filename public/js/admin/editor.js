@@ -1,20 +1,17 @@
 define(function(require, exports, module){
 	//require('umeditor');
 	require('ckeditor');
+	var popup = require('popup');
 	var upload = require('../common/upload');
-	var modal = $('#modalTip'),
-		modalContent = $('.modal-body'),
-		throttle = true,
+	var throttle = true,
 		coverUrl = '';
 	CKEDITOR.replace( 'myEditor' );
 	//var um = UM.getEditor('myEditor');
-	upload.init('#cover', {success: function(res, inst){
+	upload.init('#cover', {size: 600, success: function(res){
 		if(res.state == 'success'){
 			coverUrl = res.url;
-			inst.$el.after('<img src="'+coverUrl+'" width="200"/>');
 		}else{
-			modalContent.text('上传失败！');
-			modal.modal('show');
+			popup.alter('上传失败');
 		}
 	}});
 	module.exports = {
@@ -32,11 +29,9 @@ define(function(require, exports, module){
 				$.post('/article/add',postData,function(res){
 						throttle = true;
 						if(res.status == 'success'){
-							modalContent.text('发布成功！');
-							modal.modal('show');
+							popup.alter('发布成功');
 						}else{
-							modalContent.text(res.errorMsg);
-							modal.modal('show');
+							popup.alter(res.errorMsg);
 						}
 				});
 			}

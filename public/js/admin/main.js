@@ -6,7 +6,8 @@ requirejs.config({
     'md5': "/vendor/crypto/md5",
     'umeditor-config': "/vendor/umeditor/umeditor.config",
     'umeditor': "/vendor/umeditor/umeditor",
-    'ckeditor': "/vendor/ckeditor/ckeditor"
+    'ckeditor': "/vendor/ckeditor/ckeditor",
+    'popup': "/js/common/popup"
   },
   shim: {
     "bootstrap": {

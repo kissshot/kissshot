@@ -1,17 +1,13 @@
 var article = require('../models/article.js'),
 	auth = require('../lib/auth.js'),
-	utils = require('../lib/utils.js'),
-	consts = require('../lib/const.js');
+	multer  = require('multer'),
+	utils = require('../lib/utils.js');
 
 module.exports = {
-	/*
-	* 路由监听
-	* param express实例
-	*/
 	registerRoutes: function(app) {
-		app.post('/article/add', this.add); 	//文章添加
-		app.get('/article/:id', this.getById);	//根据id获取文章
-		app.get('/article/all', this.all);		//查询所有文章
+		app.post('/article/add', this.add);
+		app.get('/article/:id', this.getById);
+		app.get('/article/all', this.all);
 	},
 	add: function(req, res){
 		console.log(req.body);
@@ -26,7 +22,7 @@ module.exports = {
 			}).save(function(err){
 					console.log(err);
 				if(err){
-					res.json({status: 'fail', errorMsg: '保存文章出错'});
+					res.json({status: 'fail', errorMsg: '鍙戣〃澶辫触'});
 				}else{
 					res.json({status: 'success'});
 				}

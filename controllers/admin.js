@@ -21,7 +21,7 @@ module.exports = {
 		res.redirect('/admin');
 	},
 	main: function(req, res){
-		auth.isLogined(req).then(function(){
+		auth.isLogined(req.cookies.account).then(function(){
 			res.render(viewsPath + 'home', {layout: 'admin', title: '作坊'});
 		}).catch(function(){
 			res.clearCookie('account');

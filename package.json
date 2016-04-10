@@ -23,7 +23,8 @@
     "formidable": "^1.0.17",
     "hbs": "^4.0.0",
     "material-ui": "^0.15.0-alpha.2",
-    "mongoose": "^4.4.7"
+    "mongoose": "^4.4.7",
+    "multer": "^1.1.0"
   },
   "devDependencies": {
     "morgan": "^1.7.0",

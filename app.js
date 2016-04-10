@@ -40,6 +40,7 @@ switch(env){										//记录日志
 		}));
 		break;
 }
+
  var user = require('./models/admin/user.js');
   user.find(function(err, users){
  	if(users.length){

@@ -1,13 +1,5 @@
 define(function(require, exports, module){
-    /*
-    * 文件上传构造函数，暂时只支持图片上传
-    * @param {dom} el 上传组件容器
-    * @param {object} options 可选参数
-    * @returns {object} upload 上传函数实例
-    *
-    * @date 2016-04-01
-    * @author kissshot
-    */
+    var popup = require('popup');
     function upload(el, options){
         var defaults = {
             upUrl: "/resource/img/upload"
@@ -20,34 +12,95 @@ define(function(require, exports, module){
     }
     upload.prototype = {
         construtor: upload,
-        formTpl: '<form action="{{action}}" class="upload-form" method="post" enctype="multipart/form-data" target="up">' +
-        '<input style=\"filter: alpha(opacity=0);\" class="upload-input" type="file" hidefocus name="upload" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/>' +
-        '</form>',
+        formTpl: '<input style=\"filter: alpha(opacity=0);\" class="upload-input" type="file" hidefocus name="upload" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/>',
         initDom: function(){
             var me = this;
-            me.form = $(me.formTpl.replace('{{action}}', me.options.upUrl)).appendTo(me.$el);
-            me.input = me.form.find('input');
+            me.upinput = $(me.formTpl).appendTo(me.$el);
         },
         bindEvents: function(){
             var me = this;
-            me.input.change(function(){
-                $('<iframe name="up" style="display: none"></iframe>').appendTo($('body')).load(function(){
-                    me.iframeLoaded(this);
+            me.upinput.change(function(){
+                var fileInput = this;
+                me.drawCanvasImage(fileInput.files[0], me.options.size).then(function(arr){
+                    popup.confirm({title: '棰勮', content: '<img src="'+arr[0]+'"/>'}, function(flag){
+                        if(flag){
+                            var fd = new FormData();
+                            fd.append('upload', arr[1], fileInput.files[0].name);
+                            $.ajax({
+                                url: me.options.upUrl,
+                                type: 'POST',
+                                data: fd,
+                                processData : false,
+                                /**
+                                 *蹇呴』false鎵嶄細鑷姩鍔犱笂姝ｇ‘鐨凜ontent-Type
+                                 */
+                                contentType : false,
+                                success: function(res){
+                                    me.options.success(res);
+                                }
+                            })
+                            //$('<iframe name="up" style="display: none"></iframe>').appendTo($('body')).load(function(){
+                            //    me.iframeLoaded(this);
+                            //});
+                            //me.form.submit();
+                        }else{
+
+                        }
+                    });
                 });
-                me.form.submit();
             });
         },
-        iframeLoaded: function(iframe){
-            var jsonStr = iframe.contentWindow.document.body.textContent;
-            $(iframe).remove();
-            try{
-                jsonStr = JSON.parse(jsonStr);
-                this.options.success(jsonStr, this);
-            }catch(e){
-                console.log(e);
+        //iframeLoaded: function(iframe){
+        //    var jsonStr = iframe.contentWindow.document.body.textContent;
+        //    $(iframe).remove();
+        //    try{
+        //        jsonStr = JSON.parse(jsonStr);
+        //        this.options.success(jsonStr, this);
+        //    }catch(e){
+        //        console.log(e);
+        //    }
+        //},
+        drawCanvasImage: function(file, width){
+            var me = this;
+            return new Promise(function(resovle, reject){
+                var canvas = document.createElement('canvas'),
+                    context = canvas.getContext('2d');
+
+                var img = new Image();
+                img.onload = function(){
+                    if(width){
+                        if(width > img.width){
+                            var target_w = img.width;
+                            var target_h = img.height;
+                        }else{
+                            var target_w = width;
+                            var target_h = parseInt(target_w/img.width*img.height);
+                        }
+                    }else{
+                        var target_w = img.width;
+                        var target_h = img.height;
+                    }
+                    canvas.width = target_w;
+                    canvas.height = target_h;
+
+                    context.drawImage(img,0,0,target_w,target_h);
+
+                    _canvas = canvas.toDataURL();
+                    /*console.log(_canvas);*/
+                    resovle([_canvas, me.dataURLtoBlob(_canvas)]);
+                }
+                img.src = window.URL.createObjectURL(file);;
+            });
+        },
+        dataURLtoBlob: function(dataurl) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
             }
+            return new Blob([u8arr], {type:mime});
         }
-    }
+}
     module.exports = {
         init: function(el, options){
             return new upload(el, options);
