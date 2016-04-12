@@ -32,13 +32,13 @@
         }
         $w.on('resize load', function(){
             var w = $w.width();
-            if(w < 768){
+            if(w < 568){
                 $lists = $('.list-item');
                 $lists.css({
                     position: 'static'
                 });
                 $('.row').height($lists.last().position().top + $lists.last().height());
-            }else if(w < 992 && w >= 768){
+            }else if(w < 992 && w >= 568){
                 $lists = $('.list-item');
                 $lists.each(function(i){
                     var $this = $(this);

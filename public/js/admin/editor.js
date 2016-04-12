@@ -7,7 +7,7 @@ define(function(require, exports, module){
 		coverUrl = '';
 	CKEDITOR.replace( 'myEditor' );
 	//var um = UM.getEditor('myEditor');
-	upload.init('#cover', {size: 600, success: function(res){
+	upload.init('#cover', {size: 500, success: function(res){
 		if(res.state == 'success'){
 			coverUrl = res.url;
 		}else{
