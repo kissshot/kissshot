@@ -8,6 +8,7 @@ module.exports = {
 	},
 	upload: function(req, res){
 		console.log(req.file)
+		if(!req.session.account)return;
 		var size = req.body.size;
 		var imgDir = 'public/resources/img/'+utils.getTime('yy-mm-dd');  //'/resources/img/2016-03-27'
 		if(!fs.existsSync(imgDir)){

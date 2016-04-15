@@ -21,7 +21,7 @@ module.exports = {
 		res.redirect('/admin');
 	},
 	main: function(req, res){
-		auth.isLogined(req.cookies.account).then(function(){
+		auth.isLogined(req).then(function(){
 			res.render(viewsPath + 'home', {layout: 'admin', title: '作坊'});
 		}).catch(function(){
 			res.clearCookie('account');
@@ -40,11 +40,13 @@ module.exports = {
 				var cookieOpt = {};
 				if(userData.isRemember === 'true'){
 					cookieOpt.maxAge = consts.MAXAGE;
+					user.lastLogin = now;
+					user.authHash = authHash;
+					user.save(function(){});
 				}
-				res.cookie("account", {account: user.account, hash: authHash}, cookieOpt);
-				user.lastLogin = now;
-				user.authHash = authHash;
-				user.save(function(){});
+				res.cookie("account", {hash: authHash}, cookieOpt);
+				req.session.account = user.account;
+
 				res.json({ status: 'success'});
 			}else{
 				res.json({ errorMsg: '用户名不存在或者密码不正确' ,status: 'fail'});

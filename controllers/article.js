@@ -12,7 +12,7 @@ module.exports = {
 	add: function(req, res){
 		console.log(req.body);
 		var info = req.body;
-		auth.isLogined(req.cookies.account).then(function(){
+		auth.isLogined(req).then(function(){
 			new article({
 				title: info.title,
 				key: info.key,

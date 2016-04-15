@@ -4,7 +4,10 @@
   "description": "the server of my site",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "linux-dev":"export NODE_ENV=development&& nodemon app.js",
+    "linux-pro":"export NODE_ENV=production&& nodemon app.js",
+    "win-dev": "set NODE_ENV=development&& nodemon app.js",
+    "win-pro": "set NODE_ENV=production&& nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

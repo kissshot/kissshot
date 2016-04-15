@@ -8,6 +8,11 @@ var hash = require('./lib/auth.js');				//权限相关
 
 var app = express();
 var env = app.get('env');
+console.log(env)
+console.log(env.length)
+console.log(appConfig.mongoDb.url)
+console.log(appConfig.mongoDb.url['development'])
+console.log(appConfig.mongoDb.url[env])
 var db = mongoose.connect(appConfig.mongoDb.url[env], appConfig.mongoDb.options);	//数据库连接
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
