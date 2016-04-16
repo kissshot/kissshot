@@ -1,3 +1,6 @@
+/**
+ * Created by koroti on 2016/4/16.
+ */
 define(function(require, exports, module){
     var popup = require('popup');
     function upload(el, options){
@@ -100,7 +103,7 @@ define(function(require, exports, module){
             }
             return new Blob([u8arr], {type:mime});
         }
-}
+    }
     module.exports = {
         init: function(el, options){
             return new upload(el, options);
