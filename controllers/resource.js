@@ -12,7 +12,7 @@ module.exports = {
 		var size = req.body.size;
 		var imgDir = 'public/resources/img/'+utils.getTime('yy-mm-dd');  //'/resources/img/2016-03-27'
 		if(!fs.existsSync(imgDir)){
-			fs.mkdirSync(imgDir);
+			utils.mkdirsSync(imgDir);
 		}
 		var file = req.file;
 		var path = imgDir + '/' + file.originalname;
