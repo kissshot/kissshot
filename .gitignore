@@ -1,6 +1,15 @@
-node_modules/
+/node_modules
+
+/output
+
+/components
+
 lib/credentials.js
+
 .idea/
+
 public/resources
+
 npm-debug.log
+
 log/

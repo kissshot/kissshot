@@ -4,8 +4,8 @@
   "description": "the server of my site",
   "main": "app.js",
   "scripts": {
-    "linux-dev":"export NODE_ENV=development&& nodemon app.js",
-    "linux-pro":"export NODE_ENV=production&& nodemon app.js",
+    "linux-dev": "export NODE_ENV=development&& nodemon app.js",
+    "linux-pro": "export NODE_ENV=production&& nodemon app.js",
     "win-dev": "set NODE_ENV=development&& nodemon app.js",
     "win-pro": "set NODE_ENV=production&& nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,6 +30,9 @@
     "multer": "^1.1.0"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "chalk": "^1.1.3",
     "morgan": "^1.7.0",
     "nodemon": "^1.9.1"
   }

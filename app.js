@@ -36,7 +36,7 @@ app.set('view engine', '.html');  					//设置模板引擎
 app.use(express.static(__dirname + '/public'));  	//设置静态文件路径
 
 switch(env){										//记录日志
-	case "development": 
+	case "development":
 		app.use(require('morgan')('dev'));
 		break;
 	case "production":
